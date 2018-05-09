@@ -7,66 +7,123 @@ class ChessMatrix{
 		this.clicked=false;
 		this.move=1;
 		this.userID=1;
-		this.clicked=false;
+		this.clicked=false;		
 		this.drawMatrix = new DrawMatrix(ctx,cubWidth,img);
 		this.moveMatrix = new MoveMatrix();
-		this.client = new Client('http://localhost:8080/');
-		this.getClientMatrix();
+		this.host='http://localhost:8080/';
+		this.client = new Client(this.host);
 	}
-	// setUserID(userID){
-	// 	this.userID=userID;	
-	// }
-	async setUserID(){		
-		let userID;
+	
+	async getClientUserID(){		
+		
 		if(	localStorage.getItem('chessUserID')!==null){
-			userID= Number(localStorage.getItem('chessUserID'));
-			if(userID<0){
+			this.userID= Number(localStorage.getItem('chessUserID'));
+			if(this.userID<0){
 				this.startTimer();						
 			}					
 		}else{			
-			userID = Number(await this.client.getUserID(this.userID));
-			if(userID!==0){
-				localStorage.setItem('chessUserID',userID)
-				if(userID<0){
+			this.userID = Number(await this.client.getUserID(this.userID));
+			if(this.userID!==0){
+				localStorage.setItem('chessUserID',this.userID)
+				if(this.userID<0){
 					this.startTimer();						
 				}
 			}
-		}
-		this.userID=userID;	
+		}	
 	}
-	click(x,y){
-		console.log('c',this.move);
+	click(x,y){	
 		let v= Number(this.moveMatrix.getValue(x,y));
 		let us=this.userID/Math.abs(this.userID);
 		let vs=v/Math.abs(v);	
 			if(this.clicked){
-				if(this.oldValue!==0){					
-					//console.log(matrix.testMovePawn(oldX,oldY,x,y,userID));
-					//console.log(oldX,oldY,x,y);					
-					this.setValue(x,y,this.oldValue);
-					this.setValue(this.oldX,this.oldY,0);
-					this.move=-this.userID;
-					this.drawMatrix.draw();
-					// if(this.userID<0){
-					// 	this.moveMatrix.reverseMatrix();
-					// }
-					this.client.setMatrix(this.getMatrix());
-					this.client.setMove(this.move);
-					this.clicked=false;
-					this.startTimer();						
+				if(this.oldValue!==0){	
+					this.moveMatrix.setMove(this.oldX,this.oldY,x,y);
+					this.moveMatrix.setUserID(this.userID);
+					if(this.go(x,y)){						
+						this.move=-this.userID;
+						this.drawMatrix.draw();	
+						if(this.userID<0){
+							this.moveMatrix.reverseMatrix();					
+						}				
+						this.client.setMatrix(this.getMatrix());
+						this.client.setMove(this.move);
+						this.clicked=false;
+						this.startTimer();
+					}
 				}					
 			}
 			if((us===vs)&&(this.userID===this.move)&&(v!==0)){						
 				this.oldValue=v;
 				this.oldX = x;
-				this.oldY = y;
-				//console.log(oldX,oldY);
+				this.oldY = y;				
 				this.clicked=true;				
 			}		
 	}
+	go(x,y){
+		let v= Number(this.getValue());		
+		switch (Math.abs(v)){
+			case 1:{
+				console.log(this.moveMatrix.testMovePawn());
+				if(this.moveMatrix.testMovePawn()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);					
+					return true;
+				}
+			return false;
+			}
+			case 2:{
+				if(this.moveMatrix.testMoveRook()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			
+			}
+			case 3:{
+				if(this.moveMatrix.testMoveHorse()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			}
+			case 4:{
+				if(this.moveMatrix.testMoveElephant()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			}
+			case 5:{
+				if(this.moveMatrix.testMoveQueen()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			}
+			case 6:{
+
+				if(this.moveMatrix.testMoveKing()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			}
+			default: return false;
+		}		
+	}
+	
+
 	setValue(x, y, value){
 		this.moveMatrix.setValue(x, y, value);
 		this.drawMatrix.setValue(x, y, value);
+	}
+	getValue(){		
+		return this.moveMatrix.getValue(this.oldX, this.oldY);
 	}
 	setMove(move){
 		this.move=move;
@@ -83,27 +140,31 @@ class ChessMatrix{
 
 	getMatrix(){
 		return this.moveMatrix.getMatrix();
-	}	
+	}
 
 	startTimer(){
-
 		this.timer= setInterval(async ()=>{		
-			//console.log('t');
-		   	this.move = Number(await this.client.getMove());		
-
-		   	//console.log('m',this.move);
-
+			console.log('t');
+		   	this.move = Number(await this.client.getMove());
 		  	if(this.move===this.userID){
 		  		clearInterval(this.timer);
 		  		const mtr = JSON.parse(await this.client.getMatrix());
 				this.setMatrix(mtr);					
-				// if(this.userID<0){
-				// 	this.moveMatrix.reverseMatrix();
-				// }
+				if(this.userID<0){
+					this.moveMatrix.reverseMatrix();					
+				}
 				this.drawMatrix.draw();		
-		 	}
-			  
+		 	}			  
 		},
 		1000); 	
+	}
+
+	reverseMatrix(){		
+		 this.moveMatrix.reverseMatrix();
+	}
+	
+	setHost(host){
+		this.host=host;
+		this.client = new Client(this.host);
 	}
 }

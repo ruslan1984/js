@@ -3,7 +3,7 @@ class DrawMatrix extends Matrix{
 	constructor(ctx,cubWidth,img){
 		super();
 		this.setDrawMatrix(ctx,cubWidth,img)
-		this.matrix = [];		
+		//this.matrix = [];		
 	}
 
 	setDrawMatrix(ctx,cubWidth,img){

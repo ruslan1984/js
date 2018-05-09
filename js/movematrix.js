@@ -1,65 +1,82 @@
 
 class MoveMatrix extends Matrix{
-	constructor(matrix){
+	constructor(){
 		super();
-		this.matrix=matrix;
+		//this.matrix=matrix;		
+		this.oldX=-1;
+		this.oldY=-1;
+		this.x=-1;
+		this.y=-1;
+		this.userID=0;
 	}
+	setMove(oldX,oldY,x,y){
+		this.oldX=oldX;
+		this.oldY=oldY;
+		this.x=x;
+		this.y=y;
+	}
+	setUserID(userID){
+		this.userID=userID;
+	}
+
 	setMatrix(matrix){
 		this.matrix=matrix;
 	}
-	testMoveRook(oldX,oldY,x,y){
-		if(((oldX===x)||(oldY===y))&&this.testLastPoint(oldX,oldY,x,y,userID)){
+	testMoveElephant(){
+		if(((this.oldX===this.x)||(this.oldY===this.y))&&
+			this.testLastPoint()){
 			return true;
 		}
 		return false;
 	}
-	testMoveElephant(oldX,oldY,x,y){
-		if((Math.abs(oldX-x)===Math.abs(oldY-y))&&(this.testLastPoint(oldX,oldY,x,y,userID))){
+	testMoveRook(){
+		if((Math.abs(this.oldX-this.x)===Math.abs(this.oldY-this.y))&&
+			(this.testLastPoint())){
 			return true;
 		}
 		return false;
 	}
-	testMoveHorse(oldX,oldY,x,y){
-		if((((Math.abs(oldX-x)===2)&&(Math.abs(oldY-y)===1))||
-		    ((Math.abs(oldX-x)===1)&&(Math.abs(oldY-y)===2)))&&
-		   (this.testLastPoint(oldX,oldY,x,y,userID))){
+	testMoveHorse(){
+		if((((Math.abs(this.oldX-this.x)===2)&&(Math.abs(this.oldY-this.y)===1))||
+		    ((Math.abs(this.oldX-this.x)===1)&&(Math.abs(this.oldY-this.y)===2)))&&
+		   (this.testLastPoint())){
 			return true;
 		}
 		return false;
 	}
-	testMoveQueen(oldX,oldY,x,y){
-		if((this.testMoveRook(oldX,oldY,x,y))||
-		   (this.testMoveElephant(oldX,oldY,x,y))){
+	testMoveQueen(){
+		if((this.testMoveRook())||
+		   (this.testMoveElephant())){
 			return true;
 		}
 		return false;
 	}
-	testMoveKing(oldX,oldY,x,y){
-		if((Math.abs(oldX-x)===1)||(Math.abs(oldY-y)===1)){
+	testMoveKing(){
+		if((Math.abs(this.oldX-this.x)<=1)&&(Math.abs(this.oldY-this.y)<=1)){
 			return true;
 		}
 		return false;
 	}
-	testMovePawn(oldX,oldY,x,y,userID){
-		const u = userID/Math.abs(userID);
-		const value = this.getValue(x,y);		
+	testMovePawn(){
+		const u = this.userID/Math.abs(this.userID);
+		const value = this.getValue(this.x,this.y);		
 		const v = value/Math.abs(value);
-		if(Math.abs(oldX===x)&&(value===0)){
-			if((oldY-y)===1){
+		if(Math.abs(this.oldX===this.x)&&(value===0)){
+			if((this.oldY-this.y)===1){
 				return true;
 			}
-			if((oldY===6)&&((oldY-y)===2)){
+			if((this.oldY===6)&&((this.oldY-this.y)===2)){
 				return true;
 			}
 		}
-		if(((oldY-y)===1)&&(Math.abs(oldX-x)===1)&&(u===-v)){
+		if(((this.oldY-this.y)===1)&&(Math.abs(this.oldX-this.x)===1)&&(u===-v)){
 			return true;
 		}
 		return false;
 	}
-	testLastPoint(oldX,oldY,x,y,userID){
-		const u = userID/Math.abs(userID);
-		const value = this.getValue(x,y);		
+	testLastPoint(){
+		const u = this.userID/Math.abs(this.userID);
+		const value = this.getValue(this.x,this.y);		
 		const v = value/Math.abs(value);
 		return (u===-v)||(value===0);
 	}

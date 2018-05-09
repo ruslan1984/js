@@ -17,14 +17,6 @@ class Client{
 	async getMatrix(){	
 		const response=await fetch(this.host+'getmatrix',
 		 	{method: "POST",});
-		
-			// response.json().then((data)=> {        		
-   //      		matrix.setMatrix(JSON.parse(data));
-			// 	//matrix.reverseMatrix();	
-   //      		matrix.drawMatrix();        		
-	  //     		}).catch(()=>{
-	  //     			console.log('Ошибка get');
-	  //     	});
       	return response.json();
 	}
 
