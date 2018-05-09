@@ -1,9 +1,10 @@
 'use strict';
 class Client{
-	// constructor(host){
-	// }
+	constructor(host){
+		this.host=host;
+	}
 	async setMatrix (matrix){		
-		fetch('http://localhost:8080/setmatrix',
+		fetch(this.host+'setmatrix',
 		 	{
 				method: "POST",
 				body: JSON.stringify(matrix)
@@ -14,7 +15,7 @@ class Client{
 	}  
 
 	async getMatrix(){	
-		const response=await fetch('http://localhost:8080/getmatrix',
+		const response=await fetch(this.host+'getmatrix',
 		 	{method: "POST",});
 		
 			// response.json().then((data)=> {        		
@@ -29,7 +30,7 @@ class Client{
 
 
 	async setMove(move){		
-		fetch('http://localhost:8080/setmove',
+		fetch(this.host+'setmove',
 		 	{
 				method: "POST",
 				body: JSON.stringify(move)
@@ -40,13 +41,12 @@ class Client{
 	}  
 
 	async getMove(){	
-		const response=await fetch('http://localhost:8080/getmove',{method: "POST"});			
+		const response=await fetch(this.host+'getmove',{method: "POST"});			
       	return response.json();		
 	}	
 
 	async getUserID(userID){	
-		const response=await fetch('http://localhost:8080/getuserid',{method: "POST",body: JSON.stringify(userID)});
+		const response=await fetch(this.host+'getuserid',{method: "POST",body: JSON.stringify(userID)});
 		return response.json();
 	}
-
 }

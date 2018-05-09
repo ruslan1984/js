@@ -9,11 +9,11 @@ class Matrix{
 	getMatrix(){		
 		return this.matrix;
 	}
-	getValue(x,y){
-		return this.matrix[x][y];
-	}
 	setValue(x,y,value){
 		this.matrix[x][y] = value;
+	}	
+	getValue(x,y){
+		return this.matrix[x][y];
 	}	
 	getReverseMatrix(){
 		let matrix=this.matrix.slice();

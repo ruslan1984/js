@@ -1,7 +1,11 @@
 
 class MoveMatrix extends Matrix{
-	constructor(oldX,oldY,x,y,userID){
+	constructor(matrix){
 		super();
+		this.matrix=matrix;
+	}
+	setMatrix(matrix){
+		this.matrix=matrix;
 	}
 	testMoveRook(oldX,oldY,x,y){
 		if(((oldX===x)||(oldY===y))&&this.testLastPoint(oldX,oldY,x,y,userID)){

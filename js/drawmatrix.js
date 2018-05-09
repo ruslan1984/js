@@ -2,14 +2,14 @@
 class DrawMatrix extends Matrix{
 	constructor(ctx,cubWidth,img){
 		super();
-		this.ctx=ctx;
-		this.cubWidth=cubWidth;
-		this.figures = new Figures(ctx,cubWidth,img);
+		this.setDrawMatrix(ctx,cubWidth,img)
 		this.matrix = [];		
 	}
 
 	setDrawMatrix(ctx,cubWidth,img){
-
+		this.ctx=ctx;
+		this.cubWidth=cubWidth;
+		this.figures = new Figures(ctx,cubWidth,img);
 	}
 	
 	drawBoard(){
