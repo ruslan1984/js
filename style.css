@@ -1,0 +1,28 @@
+body{
+	background-image: url('img/fon.jpeg');
+}
+#desck{
+	text-align: center;
+}
+main{
+	margin: 20px 0;
+}
+button{
+	background: #28b128;
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 3px 2px 5px black;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+button:hover{
+	background: #389c38;
+	color:#eee;
+}
+button:active,
+button:focus{
+	border: none;
+}
