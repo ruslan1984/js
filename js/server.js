@@ -32,6 +32,10 @@ server.post('/getmove', (request, response, next) => {
 
 server.post('/setmove', (request, response, next) => {	
     move = Number(request.body);
+    if(move===0){
+    	move=1;
+		userID=1;
+    }
     response.send();
     next();     
 });
@@ -45,8 +49,6 @@ server.post('/getuserid', (request, response, next) => {
 	}       
     next();        
 });
-
-
 
 server.listen(8080, () => {
     console.log('%s listening at %s', server.name, server.url);
