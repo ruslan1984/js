@@ -1,8 +1,7 @@
 
 class MoveMatrix extends Matrix{
 	constructor(){
-		super();
-		//this.matrix=matrix;		
+		super();		
 		this.oldX=-1;
 		this.oldY=-1;
 		this.x=-1;
@@ -21,7 +20,7 @@ class MoveMatrix extends Matrix{
 
 	setMatrix(matrix){
 		this.matrix=matrix;
-	}
+	}	
 	testMoveRook(){
 		if(((this.oldX===this.x)||(this.oldY===this.y))&&
 			this.testLastPoint()&&this.testLineRook()){
@@ -108,12 +107,60 @@ class MoveMatrix extends Matrix{
 		let length=Math.abs(this.oldY-this.y);
 		let lx=(this.oldX<this.x)?1:-1;
 		let ly=(this.oldY<this.y)?1:-1;		
-		for(let i=1; i<length; i++){
-			console.log(this.matrix[this.oldX+i*lx][this.oldY+i*ly]);
+		for(let i=1; i<length; i++){		
 			if(this.matrix[this.oldX+i*lx][this.oldY+i*ly]!==0){
 				return false;
 			}
 		}
 		return true;	
+	}
+	testTarget(x,y){	
+		x=4;
+		y=2;		
+		const u=this.getSign(this.userID);		
+		let length = 0;
+		if(x<7){
+			if(this.matrix[x+1][y-1]===1*u){
+				return false;						
+			}
+
+			length = 8-x; 
+			for(let i=1;i<=length;i++){				
+				if(this.matrix[x-i][y]===4*u){
+					return false;
+				}
+			}
+		}
+		if(x>0){
+			if(this.matrix[x-1][y-1]===1*u){
+				return false;			
+			}
+			length = Math.abs(x-8); 
+			for(let i=1;i<length;i++){				
+				if(this.matrix[x+i][y]===4*u){
+					return false;
+				}
+			}
+		}	
+
+		if(y<7)	{
+			length = 8-x; 
+			for(let i=1;i<=length;i++){				
+				if(this.matrix[x][y-i]===4*u){
+					return false;
+				}
+			}
+		}
+		if(y>0)	{
+			length = Math.abs(x-8); 
+			for(let i=1;i<length;i++){				
+				if(this.matrix[x][y+i]===4*u){
+					return false;
+				}
+			}			
+		}
+
+		return true;
 	}	
-}
+
+};

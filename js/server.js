@@ -11,9 +11,10 @@ server.pre((request, response, next) => {
     }
     response.send();
 });
-let matrix = JSON.stringify(getNewMatrix());
+let matrix =  JSON.stringify(getNewMatrix());
 let move=1;
 let userID=1;
+let finish=0;
 server.post('/getmatrix', (request, response, next) => {       
     response.send(matrix);    
     next();    
@@ -32,10 +33,11 @@ server.post('/getmove', (request, response, next) => {
 
 server.post('/setmove', (request, response, next) => {	
     move = Number(request.body);
-    if(move===0){
-    	move=1;
-		userID=1;
-    }
+    //if(move===0){
+   		// 	move=1;
+   		//	userID=1;
+	//	matrix=JSON.stringify(getNewMatrix());
+    //}
     response.send();
     next();     
 });
@@ -50,9 +52,37 @@ server.post('/getuserid', (request, response, next) => {
     next();        
 });
 
+server.post('/setuserid', (request, response, next) => { 	
+	userID = Number(request.body);
+	response.send();	
+    next();        
+});
+
+server.post('/getfinish', (request, response, next) => { 	
+	response.send(JSON.stringify(finish));	
+    next();        
+});
+
+server.post('/setfinish', (request, response, next) => { 		
+	finish = Number(request.body);	
+	if(finish===0){
+		finish=0;
+		userID=1;
+		move=1;
+		matrix=JSON.stringify(getNewMatrix());
+	}	
+	response.send();	
+    next();        
+});
+
+
+
 server.listen(8080, () => {
     console.log('%s listening at %s', server.name, server.url);
 });
+
+
+
 
 function getNewMatrix(){
 	let matrix=[];		
@@ -95,5 +125,19 @@ function getNewMatrix(){
 				matrix[i][j]=0;
 			}
 		}
+	
+// for(let i=0;i<8;i++){
+// 		matrix[i]=new Array();
+// 		for(let j=0;j<8;j++){
+// 			matrix[i][j]=0;
+// 	}}	
+// 		matrix[7][7]=-1;	
+// 		matrix[7][6]=1;	
+// 		matrix[6][2]=-6;
+// 		matrix[6][6]=6;
+// 		matrix[5][6]=4;
+// 		matrix[6][5]=-4;
+	
+		
 	return matrix;
 }

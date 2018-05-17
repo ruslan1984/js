@@ -5,18 +5,18 @@ class Figures{
 		this.setDraw(ctx,cubWidth,img);
 	}
 	setDraw(ctx,cubWidth,img){
-		this.pawnWhite = new Figure(ctx,cubWidth,img,449,91,90,90);
-		this.kingWhite = new Figure(ctx,cubWidth,img,365,91,80,88);
-		this.queenWhite = new Figure(ctx,cubWidth,img,274,91,80,90);		
-		this.horseWhite = new Figure(ctx,cubWidth,img,90,91,80,90);
-		this.elephantWhite = new Figure(ctx,cubWidth,img,0,91, 85,90);
-		this.rookWhite = new Figure(ctx,cubWidth,img,185,91,80,90);	
-		this.pawnBlack = new Figure(ctx,cubWidth,img,449,0,90,89);		
-		this.kingBlack = new Figure(ctx,cubWidth,img,365,0,80,90);
-		this.queenBlack = new Figure(ctx,cubWidth,img,274,0,80,90);		
-		this.horseBlack = new Figure(ctx,cubWidth,img,90,0,80,90);
-		this.elephantBlack = new Figure(ctx,cubWidth,img,0,0, 80,90);
-		this.rookBlack = new Figure(ctx,cubWidth,img,185,0,80,90);
+		this.pawnWhite = new Figure(ctx,cubWidth,img,449,93,90,84);
+		this.kingWhite = new Figure(ctx,cubWidth,img,365,93,80,84);
+		this.queenWhite = new Figure(ctx,cubWidth,img,274,93,80,84);		
+		this.horseWhite = new Figure(ctx,cubWidth,img,90,93,80,84);
+		this.elephantWhite = new Figure(ctx,cubWidth,img,0,93,85,84);
+		this.rookWhite = new Figure(ctx,cubWidth,img,185,93,80,84);	
+		this.pawnBlack = new Figure(ctx,cubWidth,img,449,3,90,84);		
+		this.kingBlack = new Figure(ctx,cubWidth,img,365,3,80,84);
+		this.queenBlack = new Figure(ctx,cubWidth,img,274,3,80,84);		
+		this.horseBlack = new Figure(ctx,cubWidth,img,90,3,80,84);
+		this.elephantBlack = new Figure(ctx,cubWidth,img,0,3, 80,84);
+		this.rookBlack = new Figure(ctx,cubWidth,img,185,3,80,84);
 		
 	}
 	draw(x,y,item){

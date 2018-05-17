@@ -32,10 +32,36 @@ class Client{
 			});
 	}  
 
+	async setUserID(userID){		
+		fetch(this.host+'setuserid',
+		 	{
+				method: "POST",
+				body: JSON.stringify(userID)
+	      	})		  		  
+		   .catch(()=>{
+		  		console.log('Ошибка setmove');
+			});
+	}  
+
 	async getMove(){	
 		const response=await fetch(this.host+'getmove',{method: "POST"});			
       	return response.json();		
 	}	
+
+	async setFinish(finish){		
+		fetch(this.host+'setfinish',{
+			method: "POST",
+			body: JSON.stringify(finish)
+		}).catch(()=>{
+			console.log('Ошибка setmove');
+		});
+	}  
+
+	async getFinish(){	
+		const response=await fetch(this.host+'getfinish',{method: "POST"});			
+      	return response.json();		
+	}	
+
 
 	async getUserID(userID){	
 		const response=await fetch(this.host+'getuserid',{method: "POST",body: JSON.stringify(userID)});

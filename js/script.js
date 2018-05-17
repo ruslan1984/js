@@ -1,8 +1,8 @@
 'use strict';
 ( ()=>{
+
 	const d=document.querySelector('#desck');
 	const h=window.innerHeight;
-	console.log(window.innerHeight);
 	d.chess(h/2);	
 
 	/*
