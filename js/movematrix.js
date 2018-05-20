@@ -21,6 +21,70 @@ class MoveMatrix extends Matrix{
 	setMatrix(matrix){
 		this.matrix=matrix;
 	}	
+
+	go(x,y){	
+
+		let v= Number(this.getValue(this.oldX,this.oldY));
+		console.log("v",v);		
+		switch (Math.abs(v)){
+			case 1:{	
+				console.log(this.testMovePawn());
+			
+				if(this.testMovePawn()){
+
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);					
+					return true;
+				}
+			return false;
+			}
+			case 2:{
+				if(this.testMoveElephant()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			
+			}
+			case 3:{
+				if(this.testMoveHorse()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			}
+			case 4:{
+				if(this.testMoveRook()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			}
+			case 5:{
+				if(this.testMoveQueen()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			}
+			case 6:{
+				if(this.testMoveKing()){
+					this.setValue(x,y,v);
+					this.setValue(this.oldX,this.oldY,0);
+					return true
+				}
+			return false;
+			}
+			default: return false;
+		}		
+	}
+
+
+
 	testMoveRook(){
 		if(((this.oldX===this.x)||(this.oldY===this.y))&&
 			this.testLastPoint()&&this.testLineRook()){

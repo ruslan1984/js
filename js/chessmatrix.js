@@ -51,91 +51,94 @@ class ChessMatrix{
 		let v= Number(this.moveMatrix.getValue(x,y));	
 			if(this.clicked&&((this.oldX !== x)||(this.oldY !== y))){
 				if(this.oldValue!==0){	
-					this.moveMatrix.setMove(this.oldX,this.oldY,x,y);
-					this.moveMatrix.setUserID(this.userID);
-					if(this.go(x,y)){						
-						//this.move=-this.userID;
+					this.moveMatrix.setMove(this.moveMatrix.oldX,this.moveMatrix.oldY,x,y);
+					this.moveMatrix.setUserID(this.userID);					
+					if(this.moveMatrix.go(x,y)){						
+						this.move=-this.userID;
 						this.drawMatrix.draw();	
 						if(this.userID<0){
 							this.moveMatrix.reverseMatrix();					
 						}				
-						// this.client.setMatrix(this.getMatrix());
-						// this.client.setMove(this.move);
-						// this.clicked=false;
-						// this.startTimer();
+						this.client.setMatrix(this.getMatrix());
+						this.client.setMove(this.move);
+						this.clicked=false;
+						this.startTimer();
 						console.log(this.moveMatrix.testTarget());
 					}
 				}					
 			}
 			if((this.moveMatrix.compareSigns(this.userID,v))&&(this.userID===this.move)&&(v!==0)){						
 				this.oldValue=v;
-				this.oldX = x;
-				this.oldY = y;				
+				this.moveMatrix.oldX = x;
+				this.moveMatrix.oldY = y;				
 				this.clicked=true;
 				this.drawMatrix.drawChecked(x,y);
 
 			}		
 	}
-	go(x,y){	
-		let v= Number(this.getValue());		
-		switch (Math.abs(v)){
-			case 1:{				
-				if(this.moveMatrix.testMovePawn()){
-					this.setValue(x,y,v);
-					this.setValue(this.oldX,this.oldY,0);					
-					return true;
-				}
-			return false;
-			}
-			case 2:{
-				if(this.moveMatrix.testMoveElephant()){
-					this.setValue(x,y,v);
-					this.setValue(this.oldX,this.oldY,0);
-					return true
-				}
-			return false;
+
+
+	// go(x,y){	
+	// 	let v= Number(this.getValue());		
+	// 	switch (Math.abs(v)){
+	// 		case 1:{				
+	// 			if(this.moveMatrix.testMovePawn()){
+	// 				this.setValue(x,y,v);
+	// 				this.setValue(this.oldX,this.oldY,0);					
+	// 				return true;
+	// 			}
+	// 		return false;
+	// 		}
+	// 		case 2:{
+	// 			if(this.moveMatrix.testMoveElephant()){
+	// 				this.setValue(x,y,v);
+	// 				this.setValue(this.oldX,this.oldY,0);
+	// 				return true
+	// 			}
+	// 		return false;
 			
-			}
-			case 3:{
-				if(this.moveMatrix.testMoveHorse()){
-					this.setValue(x,y,v);
-					this.setValue(this.oldX,this.oldY,0);
-					return true
-				}
-			return false;
-			}
-			case 4:{
-				if(this.moveMatrix.testMoveRook()){
-					this.setValue(x,y,v);
-					this.setValue(this.oldX,this.oldY,0);
-					return true
-				}
-			return false;
-			}
-			case 5:{
-				if(this.moveMatrix.testMoveQueen()){
-					this.setValue(x,y,v);
-					this.setValue(this.oldX,this.oldY,0);
-					return true
-				}
-			return false;
-			}
-			case 6:{
-				if(this.moveMatrix.testMoveKing()){
-					this.setValue(x,y,v);
-					this.setValue(this.oldX,this.oldY,0);
-					return true
-				}
-			return false;
-			}
-			default: return false;
-		}		
-	}
+	// 		}
+	// 		case 3:{
+	// 			if(this.moveMatrix.testMoveHorse()){
+	// 				this.setValue(x,y,v);
+	// 				this.setValue(this.oldX,this.oldY,0);
+	// 				return true
+	// 			}
+	// 		return false;
+	// 		}
+	// 		case 4:{
+	// 			if(this.moveMatrix.testMoveRook()){
+	// 				this.setValue(x,y,v);
+	// 				this.setValue(this.oldX,this.oldY,0);
+	// 				return true
+	// 			}
+	// 		return false;
+	// 		}
+	// 		case 5:{
+	// 			if(this.moveMatrix.testMoveQueen()){
+	// 				this.setValue(x,y,v);
+	// 				this.setValue(this.oldX,this.oldY,0);
+	// 				return true
+	// 			}
+	// 		return false;
+	// 		}
+	// 		case 6:{
+	// 			if(this.moveMatrix.testMoveKing()){
+	// 				this.setValue(x,y,v);
+	// 				this.setValue(this.oldX,this.oldY,0);
+	// 				return true
+	// 			}
+	// 		return false;
+	// 		}
+	// 		default: return false;
+	// 	}		
+	// }
 	
+
 
 	setValue(x, y, value){
 		this.moveMatrix.setValue(x, y, value);
-		this.drawMatrix.setValue(x, y, value);
+		//this.drawMatrix.setValue(x, y, value);
 	}
 	getValue(){		
 		return this.moveMatrix.getValue(this.oldX, this.oldY);
