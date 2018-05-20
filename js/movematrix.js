@@ -115,52 +115,141 @@ class MoveMatrix extends Matrix{
 		return true;	
 	}
 	testTarget(x,y){	
-		x=4;
-		y=2;		
-		const u=this.getSign(this.userID);		
+		x=2;
+		y=0;		
+		let u=this.getSign(this.userID);	
+		u=1;	
 		let length = 0;
-		if(x<7){
-			if(this.matrix[x+1][y-1]===1*u){
+		let length1 = 0;
+
+
+		if(x<7){			
+			if(this.matrix[x+1][y+1] === 1*u){
 				return false;						
 			}
 
 			length = 8-x; 
-			for(let i=1;i<=length;i++){				
-				if(this.matrix[x-i][y]===4*u){
-					return false;
-				}
+			const val = this.testTargetLine(length,x,y,1,0);
+			if((val===4*u)||(val===5*u)){
+				return false;
 			}
 		}
 		if(x>0){
-			if(this.matrix[x-1][y-1]===1*u){
+			if(this.matrix[x-1][y+1] === 1*u){
 				return false;			
 			}
-			length = Math.abs(x-8); 
-			for(let i=1;i<length;i++){				
-				if(this.matrix[x+i][y]===4*u){
-					return false;
-				}
-			}
-		}	
-
+			length = x+1; 
+			const val = this.testTargetLine(length,x,y,-1,0);
+			if((val===4*u)||(val===5*u)){
+				return false;
+			}			
+		}
 		if(y<7)	{
-			length = 8-x; 
-			for(let i=1;i<=length;i++){				
-				if(this.matrix[x][y-i]===4*u){
-					return false;
-				}
+			length = 8-y; 
+			const val =this.testTargetLine(length,x,y,0,1);
+			if((val===4*u)||(val===5*u)){
+				return false;
 			}
 		}
 		if(y>0)	{
-			length = Math.abs(x-8); 
-			for(let i=1;i<length;i++){				
-				if(this.matrix[x][y+i]===4*u){
-					return false;
-				}
+			length = y+1; 
+			const val = this.testTargetLine(length,x,y,0,-1);
+			if((val===4*u)||(val===5*u)){
+				return false;
+			}		
+		}
+
+		if((x<7)&&(y<7)){
+			length1 = Math.min(8-x, 8-y);
+			const val1 =this.testTargetLine(length1,x,y,1,1);	
+			if((val1===2*u)||(val1===5*u)){
+				return false;
+			}	
+		}
+		if((x>0)&&(y>0)){
+			length1 = Math.min(x+1, y+1);
+			const val1 = this.testTargetLine(length1,x,y,-1,-1);	
+			if((val1===2*u)||(val1===5*u)){
+				return false;
+			}		
+		}
+
+		if((x<7)&&(y>0)){
+			length1 = Math.min(8-x, y+1);
+			const val1 = this.testTargetLine(length1,x,y,1,-1);			
+			if((val1===2*u)||(val1===5*u)){
+				return false;
 			}			
 		}
 
+		if((x>0)&&(y<7)){
+			length1 = Math.min(x+1, 8-y);		
+			const val1 =this.testTargetLine(length1,x,y,-1,1);	
+			if((val1===2*u)||(val1===5*u)){
+				return false;
+			}			
+		}
+		if(!this.testTargetHorse(x,y)){
+			return false;
+		}	
+
 		return true;
-	}	
+	}
+
+	testTargetLine(length,x,y,xVector,yVector){		
+			for(let i=1; i<length; i++){		
+				
+				let val = this.matrix[x+i*xVector][y+i*yVector];				
+				if(val !== 0){
+					return val;
+				}
+			}
+		return 0;	
+	}
+	testTargetHorse(x,y){	
+
+		const u=this.getSign(this.userID);		
+		if((x+2<8)&&(y+1<8)){
+			if(this.matrix[x+2][y+1]===3*u){
+				return false;
+			}
+		}
+		if((x+2<8)&&(y-1>=0)){
+			if(this.matrix[x+2][y-1]===3*u){
+				return false;	
+			}
+		}
+		if((x+1<8)&&(y+2<8)){			
+			if(this.matrix[x+1][y+2]===3*u){
+				return false;
+			}
+		}
+		if((x+1<8)&&(y-2>=0)){
+			if(this.matrix[x+1][y-2]===3*u){
+				return false;	
+			}
+		}
+		if((x-2>=0)&&(y+1<8)){
+			if(this.matrix[x-2][y+1]===3*u){
+				return false;
+			}
+		}
+		if((x-2>=0)&&(y-1>=0)){
+			if(this.matrix[x-2][y-1]===3*u){
+				return false;					
+			}
+		}		
+		if((x-1>=0)&&(y+2<8)){
+			if(this.matrix[x-1][y+2]===3*u){
+				return false;
+			}
+		}
+		if((x-1>=0)&&(y-2>=0)){
+			if(this.matrix[x-1][y-2]===3*u){
+				return false;	
+			}			
+		}		
+		return true;
+	}
 
 };

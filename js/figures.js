@@ -17,6 +17,9 @@ class Figures{
 		this.horseBlack = new Figure(ctx,cubWidth,img,90,3,80,84);
 		this.elephantBlack = new Figure(ctx,cubWidth,img,0,3, 80,84);
 		this.rookBlack = new Figure(ctx,cubWidth,img,185,3,80,84);
+
+		this.test = new Figure(ctx,cubWidth,img,185,3,180,184);
+
 		
 	}
 	draw(x,y,item){
@@ -56,7 +59,11 @@ class Figures{
 			break;
 			case -6:
 				this.kingBlack.draw(x,y);
-			break;			
+			break;		
+
+			case 9:
+				this.test.draw(x,y);
+			break;		
 		}
 	}
 }

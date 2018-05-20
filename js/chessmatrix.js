@@ -39,27 +39,31 @@ class ChessMatrix{
 		}	
 	}
 	async click(x,y){
+		
+		
+
 		this.finish = Number(await this.client.getFinish());		
 		if(this.finish!==0){
 			alert('Оппонент завершил игру');
 			this.endGame();					
 			return;
-		}		
+		}
 		let v= Number(this.moveMatrix.getValue(x,y));	
 			if(this.clicked&&((this.oldX !== x)||(this.oldY !== y))){
 				if(this.oldValue!==0){	
 					this.moveMatrix.setMove(this.oldX,this.oldY,x,y);
 					this.moveMatrix.setUserID(this.userID);
 					if(this.go(x,y)){						
-						this.move=-this.userID;
+						//this.move=-this.userID;
 						this.drawMatrix.draw();	
 						if(this.userID<0){
 							this.moveMatrix.reverseMatrix();					
 						}				
-						this.client.setMatrix(this.getMatrix());
-						this.client.setMove(this.move);
-						this.clicked=false;
-						this.startTimer();
+						// this.client.setMatrix(this.getMatrix());
+						// this.client.setMove(this.move);
+						// this.clicked=false;
+						// this.startTimer();
+						console.log(this.moveMatrix.testTarget());
 					}
 				}					
 			}
