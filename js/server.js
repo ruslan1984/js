@@ -126,17 +126,17 @@ function getNewMatrix(){
 			}
 		}
 	
-// for(let i=0;i<8;i++){
-// 		matrix[i]=new Array();
-// 		for(let j=0;j<8;j++){
-// 			matrix[i][j]=0;
-// 	}}	
-// 		matrix[2][0]=-6;
-// 		//matrix[7][7]=-1;	
-// 		matrix[3][3]=1;	
-// 		matrix[1][3]=1;
-// 		//matrix[5][5]=2;
-// 		//matrix[6][5]=4;
+for(let i=0;i<8;i++){
+		matrix[i]=new Array();
+		for(let j=0;j<8;j++){
+			matrix[i][j]=0;
+	}}	
+		matrix[0][0]=-6;
+		//matrix[7][7]=-1;	
+		matrix[2][2]=6;	
+		matrix[1][3]=1;
+		//matrix[5][5]=2;
+		//matrix[6][5]=4;
 	
 		
 	return matrix;

@@ -54,15 +54,15 @@ class ChessMatrix{
 					this.moveMatrix.setMove(this.moveMatrix.oldX,this.moveMatrix.oldY,x,y);
 					this.moveMatrix.setUserID(this.userID);					
 					if(this.moveMatrix.go(x,y)){						
-						this.move=-this.userID;
-						this.drawMatrix.draw();	
-						if(this.userID<0){
-							this.moveMatrix.reverseMatrix();					
-						}				
-						this.client.setMatrix(this.getMatrix());
-						this.client.setMove(this.move);
-						this.clicked=false;
-						this.startTimer();
+						// this.move=-this.userID;
+						 this.drawMatrix.draw();	
+						// if(this.userID<0){
+						// 	this.moveMatrix.reverseMatrix();					
+						// }				
+						// this.client.setMatrix(this.getMatrix());
+						// this.client.setMove(this.move);
+						// this.clicked=false;
+						// this.startTimer();
 						console.log(this.moveMatrix.testTarget());
 					}
 				}					

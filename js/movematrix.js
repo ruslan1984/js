@@ -1,3 +1,4 @@
+//import * from 'js/testtarget.js';
 
 class MoveMatrix extends Matrix{
 	constructor(){
@@ -24,8 +25,7 @@ class MoveMatrix extends Matrix{
 
 	go(x,y){	
 
-		let v= Number(this.getValue(this.oldX,this.oldY));
-		console.log("v",v);		
+		let v= Number(this.getValue(this.oldX,this.oldY));		
 		switch (Math.abs(v)){
 			case 1:{	
 				console.log(this.testMovePawn());
@@ -179,10 +179,11 @@ class MoveMatrix extends Matrix{
 		return true;	
 	}
 	testTarget(x,y){	
-		x=2;
-		y=0;		
+		x=0;
+		y=0;	
 		let u=this.getSign(this.userID);	
 		u=1;	
+		const target = new TestTarget(this.matrix,x,y,u);
 		let length = 0;
 		let length1 = 0;
 
@@ -193,7 +194,7 @@ class MoveMatrix extends Matrix{
 			}
 
 			length = 8-x; 
-			const val = this.testTargetLine(length,x,y,1,0);
+			const val = target.testTargetLine(length,1,0);
 			if((val===4*u)||(val===5*u)){
 				return false;
 			}
@@ -203,21 +204,21 @@ class MoveMatrix extends Matrix{
 				return false;			
 			}
 			length = x+1; 
-			const val = this.testTargetLine(length,x,y,-1,0);
+			const val = target.testTargetLine(length,-1,0);
 			if((val===4*u)||(val===5*u)){
 				return false;
 			}			
 		}
 		if(y<7)	{
 			length = 8-y; 
-			const val =this.testTargetLine(length,x,y,0,1);
+			const val =target.testTargetLine(length,0,1);
 			if((val===4*u)||(val===5*u)){
 				return false;
 			}
 		}
 		if(y>0)	{
 			length = y+1; 
-			const val = this.testTargetLine(length,x,y,0,-1);
+			const val = target.testTargetLine(length,0,-1);
 			if((val===4*u)||(val===5*u)){
 				return false;
 			}		
@@ -225,14 +226,14 @@ class MoveMatrix extends Matrix{
 
 		if((x<7)&&(y<7)){
 			length1 = Math.min(8-x, 8-y);
-			const val1 =this.testTargetLine(length1,x,y,1,1);	
+			const val1 =target.testTargetLine(length1,1,1);	
 			if((val1===2*u)||(val1===5*u)){
 				return false;
 			}	
 		}
 		if((x>0)&&(y>0)){
 			length1 = Math.min(x+1, y+1);
-			const val1 = this.testTargetLine(length1,x,y,-1,-1);	
+			const val1 = target.testTargetLine(length1,-1,-1);	
 			if((val1===2*u)||(val1===5*u)){
 				return false;
 			}		
@@ -240,7 +241,7 @@ class MoveMatrix extends Matrix{
 
 		if((x<7)&&(y>0)){
 			length1 = Math.min(8-x, y+1);
-			const val1 = this.testTargetLine(length1,x,y,1,-1);			
+			const val1 = target.testTargetLine(length1,1,-1);			
 			if((val1===2*u)||(val1===5*u)){
 				return false;
 			}			
@@ -248,72 +249,142 @@ class MoveMatrix extends Matrix{
 
 		if((x>0)&&(y<7)){
 			length1 = Math.min(x+1, 8-y);		
-			const val1 =this.testTargetLine(length1,x,y,-1,1);	
+			const val1 =target.testTargetLine(length1,-1,1);	
 			if((val1===2*u)||(val1===5*u)){
 				return false;
 			}			
 		}
-		if(!this.testTargetHorse(x,y)){
+		if(!target.testTargetHorse()){
 			return false;
 		}	
+		if(!target.testTargetKing()){
+			return false;
+		}
 
 		return true;
 	}
 
-	testTargetLine(length,x,y,xVector,yVector){		
-			for(let i=1; i<length; i++){		
+
+	// testTargetLine(length,x,y,xVector,yVector){		
+	// 		for(let i=1; i<length; i++){		
 				
-				let val = this.matrix[x+i*xVector][y+i*yVector];				
-				if(val !== 0){
-					return val;
-				}
-			}
-		return 0;	
-	}
-	testTargetHorse(x,y){	
+	// 			let val = this.matrix[x+i*xVector][y+i*yVector];				
+	// 			if(val !== 0){
+	// 				return val;
+	// 			}
+	// 		}
+	// 	return 0;	
+	// }
+	// testTargetHorse(x,y){	
 
-		const u=this.getSign(this.userID);		
-		if((x+2<8)&&(y+1<8)){
-			if(this.matrix[x+2][y+1]===3*u){
-				return false;
-			}
-		}
-		if((x+2<8)&&(y-1>=0)){
-			if(this.matrix[x+2][y-1]===3*u){
-				return false;	
-			}
-		}
-		if((x+1<8)&&(y+2<8)){			
-			if(this.matrix[x+1][y+2]===3*u){
-				return false;
-			}
-		}
-		if((x+1<8)&&(y-2>=0)){
-			if(this.matrix[x+1][y-2]===3*u){
-				return false;	
-			}
-		}
-		if((x-2>=0)&&(y+1<8)){
-			if(this.matrix[x-2][y+1]===3*u){
-				return false;
-			}
-		}
-		if((x-2>=0)&&(y-1>=0)){
-			if(this.matrix[x-2][y-1]===3*u){
-				return false;					
-			}
-		}		
-		if((x-1>=0)&&(y+2<8)){
-			if(this.matrix[x-1][y+2]===3*u){
-				return false;
-			}
-		}
-		if((x-1>=0)&&(y-2>=0)){
-			if(this.matrix[x-1][y-2]===3*u){
-				return false;	
-			}			
-		}		
-		return true;
-	}
+	// 	const u=this.getSign(this.userID);		
+	// 	if((x+2<8)&&(y+1<8)){
+	// 		if(this.matrix[x+2][y+1]===3*u){
+	// 			return false;
+	// 		}
+	// 	}
+	// 	if((x+2<8)&&(y-1>=0)){
+	// 		if(this.matrix[x+2][y-1]===3*u){
+	// 			return false;	
+	// 		}
+	// 	}
+	// 	if((x+1<8)&&(y+2<8)){			
+	// 		if(this.matrix[x+1][y+2]===3*u){
+	// 			return false;
+	// 		}
+	// 	}
+	// 	if((x+1<8)&&(y-2>=0)){
+	// 		if(this.matrix[x+1][y-2]===3*u){
+	// 			return false;	
+	// 		}
+	// 	}
+	// 	if((x-2>=0)&&(y+1<8)){
+	// 		if(this.matrix[x-2][y+1]===3*u){
+	// 			return false;
+	// 		}
+	// 	}
+	// 	if((x-2>=0)&&(y-1>=0)){
+	// 		if(this.matrix[x-2][y-1]===3*u){
+	// 			return false;					
+	// 		}
+	// 	}		
+	// 	if((x-1>=0)&&(y+2<8)){
+	// 		if(this.matrix[x-1][y+2]===3*u){
+	// 			return false;
+	// 		}
+	// 	}
+	// 	if((x-1>=0)&&(y-2>=0)){
+	// 		if(this.matrix[x-1][y-2]===3*u){
+	// 			return false;	
+	// 		}			
+	// 	}		
+	// 	return true;
+	// }
 
 };
+
+// class TestTarget{
+// 	constructor(x,y,u){
+// 		this.x=x;
+// 		this.y=y;
+// 		this.u=u;
+// 	}
+// 	testTargetLine(length,xVector,yVector){		
+// 			for(let i=1; i<length; i++){		
+				
+// 				let val = this.matrix[this.x+i*xVector][this.y+i*yVector];				
+// 				if(val !== 0){
+// 					return val;
+// 				}
+// 			}
+// 		return 0;	
+// 	}
+// 	testTargetHorse(){	
+
+// 		const u=this.getSign(this.userID);		
+// 		if((x+2<8)&&(y+1<8)){
+// 			if(this.matrix[this.x+2][this.y+1]===3*this.u){
+// 				return false;
+// 			}
+// 		}
+// 		if((x+2<8)&&(y-1>=0)){
+// 			if(this.matrix[this.x+2][this.y-1]===3*this.u){
+// 				return false;	
+// 			}
+// 		}
+// 		if((x+1<8)&&(y+2<8)){			
+// 			if(this.matrix[this.x+1][this.y+2]===3*this.u){
+// 				return false;
+// 			}
+// 		}
+// 		if((x+1<8)&&(y-2>=0)){
+// 			if(this.matrix[this.x+1][this.y-2]===3*this.u){
+// 				return false;	
+// 			}
+// 		}
+// 		if((x-2>=0)&&(y+1<8)){
+// 			if(this.matrix[this.x-2][this.y+1]===3*this.u){
+// 				return false;
+// 			}
+// 		}
+// 		if((x-2>=0)&&(y-1>=0)){
+// 			if(this.matrix[this.x-2][this.y-1]===3*this.u){
+// 				return false;					
+// 			}
+// 		}		
+// 		if((x-1>=0)&&(y+2<8)){
+// 			if(this.matrix[this.x-1][this.y+2]===3*this.u){
+// 				return false;
+// 			}
+// 		}
+// 		if((x-1>=0)&&(y-2>=0)){
+// 			if(this.matrix[this.x-1][this.y-2]===3*this.u){
+// 				return false;	
+// 			}			
+// 		}		
+// 		return true;
+// 	}
+// 	testTargetKing(){
+
+// 	}
+// }
