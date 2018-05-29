@@ -1,13 +1,12 @@
 class ChessMatrix{
-	constructor(ctx,cubWidth,img){
-	
+	constructor(ctx,cubWidth,img){	
+		
 		this.newGame();
 		this.drawMatrix = new DrawMatrix(ctx,cubWidth,img);
-		this.moveMatrix = new MoveMatrix();
+		this.moveMatrix = new TestTarget();		
 		this.host='http://localhost:8080/';
-		this.client = new Client(this.host);
+		this.client = new Client(this.host);		
 		
-		//this.getClientUserID();
 	}
 	newGame(){
 		this.oldX=-1,
@@ -53,8 +52,10 @@ class ChessMatrix{
 				if(this.oldValue!==0){	
 					this.moveMatrix.setMove(this.moveMatrix.oldX,this.moveMatrix.oldY,x,y);
 					this.moveMatrix.setUserID(this.userID);					
-					if(this.moveMatrix.go(x,y)){						
+					if(this.moveMatrix.go(x,y)){	
+
 						// this.move=-this.userID;
+						
 						 this.drawMatrix.draw();	
 						// if(this.userID<0){
 						// 	this.moveMatrix.reverseMatrix();					
