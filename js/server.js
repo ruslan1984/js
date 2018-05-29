@@ -86,59 +86,59 @@ server.listen(8080, () => {
 
 function getNewMatrix(){
 	let matrix=[];		
-	// for(let i=0;i<8;i++){
-	// 		matrix[i]=new Array();
-	// 		for(let j=0;j<8;j++){				
-	// 			if(j===0){
-	// 				if((i===0)||(i===7)){
-	// 					matrix[i][j]=-4;							
-	// 				}else if((i===1)||(i===6)){
-	// 					matrix[i][j]=-3;						
-	// 				}else if((i===2)||(i===5)){
-	// 					matrix[i][j]=-2;	
-	// 				}else if(i===3){
-	// 					matrix[i][j]=-5;	
-	// 				}else if(i===4){
-	// 					matrix[i][j]=-6;	
-	// 				}
-	// 				continue;
-	// 			}else if(j===1){
-	// 				matrix[i][j]=-1;	
-	// 				continue;
-	// 			}else if(j===6){
-	// 				matrix[i][j]=1;	
-	// 				continue;
-	// 			}else if(j===7){
-	// 				if((i===0)||(i===7)){
-	// 					matrix[i][j]=4;							
-	// 				}else if((i===1)||(i===6)){
-	// 					matrix[i][j]=3;						
-	// 				}else if((i===2)||(i===5)){
-	// 					matrix[i][j]=2;	
-	// 				}else if(i===3){
-	// 					matrix[i][j]=5;	
-	// 				}else if(i===4){
-	// 					matrix[i][j]=6;	
-	// 				}
-	// 				continue;
-	// 			}
-	// 			matrix[i][j]=0;
-	// 		}
-	// 	}
+	for(let i=0;i<8;i++){
+			matrix[i]=new Array();
+			for(let j=0;j<8;j++){				
+				if(j===0){
+					if((i===0)||(i===7)){
+						matrix[i][j]=-4;							
+					}else if((i===1)||(i===6)){
+						matrix[i][j]=-3;						
+					}else if((i===2)||(i===5)){
+						matrix[i][j]=-2;	
+					}else if(i===3){
+						matrix[i][j]=-5;	
+					}else if(i===4){
+						matrix[i][j]=-6;	
+					}
+					continue;
+				}else if(j===1){
+					matrix[i][j]=-1;	
+					continue;
+				}else if(j===6){
+					matrix[i][j]=1;	
+					continue;
+				}else if(j===7){
+					if((i===0)||(i===7)){
+						matrix[i][j]=4;							
+					}else if((i===1)||(i===6)){
+						matrix[i][j]=3;						
+					}else if((i===2)||(i===5)){
+						matrix[i][j]=2;	
+					}else if(i===3){
+						matrix[i][j]=5;	
+					}else if(i===4){
+						matrix[i][j]=6;	
+					}
+					continue;
+				}
+				matrix[i][j]=0;
+			}
+		}
 	
-for(let i=0;i<8;i++){
-		matrix[i]=new Array();
-		for(let j=0;j<8;j++){
-			matrix[i][j]=0;
-	}}	
-		matrix[5][5]=-6;
-		matrix[6][7]=1;	
-		matrix[4][7]=1;	
-		matrix[3][3]=6;	
-		matrix[1][3]=2;
-		matrix[5][4]=3;
-		matrix[6][6]=4;
-		matrix[1][1]=5;
+// for(let i=0;i<8;i++){
+// 		matrix[i]=new Array();
+// 		for(let j=0;j<8;j++){
+// 			matrix[i][j]=0;
+// 	}}	
+// 		matrix[5][5]=-6;
+// 		matrix[6][7]=1;	
+// 		matrix[4][7]=1;	
+// 		matrix[3][3]=6;	
+// 		matrix[1][3]=2;
+// 		matrix[5][4]=3;
+// 		matrix[6][6]=4;
+// 		matrix[1][1]=5;
 	
 		
 	return matrix;

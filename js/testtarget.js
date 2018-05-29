@@ -1,18 +1,23 @@
 class TestTarget extends MoveMatrix{
-	constructor(){
+	constructor(userID){
 		super();
+	}
 
-
-
-		this.targetX=5;
-		this.targetY=5;
-		this.u=1;//this.getSign(this.userID);
-		console.log(this.getSign(this.userID));
-		// this.matrix=matrix;
+	targetGo(x,y){		
+		if(this.go(x,y)){
+			console.log(this.testTarget());
+			if(this.testTarget()){
+				return true;
+			}else{
+				this.back();
+				return false;
+			}			
+		}
+		return false;
 	}
 
 	testTarget(){		
-
+		this.setKingPoints();
 		return  this.testTargetQueen()&&
 				this.testTargetElephant()&&
 				this.testTargetRook()&&
@@ -20,12 +25,14 @@ class TestTarget extends MoveMatrix{
 				this.testTargetHorse()&&
 				this.testTargetKing();
 	}
-	setTarget(x,y,u){
-		this.targetX=x;
-		this.targetY=y;
-		this.u=u;
-		//this.setMatrix(matrix);
-		//this.matrix=matrix;	
+	setTarget(x,y){
+		this.targetX = x;
+		this.targetY = y;				
+	}
+	setKingPoints(){
+		const p=this.getСoordinate(6*this.u);
+		this.targetX = p[0];
+		this.targetY = p[1];		
 	}
 
 
@@ -64,16 +71,16 @@ class TestTarget extends MoveMatrix{
 
 
 	testTargetLineUnit(unit){
-		return !(((this.targetX<7)&&(this.testTargetLine(1,0)===unit*this.u))||
-				 ((this.targetX>0)&&(this.testTargetLine(-1,0)===unit*this.u))||
-				 ((this.targetY<7)&&(this.testTargetLine(0,1)===unit*this.u))||
-				 ((this.targetY>0)&&(this.testTargetLine(0,-1)===unit*this.u)));
+		return !(((this.targetX<7)&&(this.testTargetLine(1,0)===unit*-this.u))||
+				 ((this.targetX>0)&&(this.testTargetLine(-1,0)===unit*-this.u))||
+				 ((this.targetY<7)&&(this.testTargetLine(0,1)===unit*-this.u))||
+				 ((this.targetY>0)&&(this.testTargetLine(0,-1)===unit*-this.u)));
 	}
 	testTargetDiagonalUnit(unit){
-		return !(((this.targetX<7)&&(this.targetY<7)&&(this.testTargetLine(1,1)===unit*this.u))||
-				 ((this.targetX>0)&&(this.targetY>0)&&(this.testTargetLine(-1,-1)===unit*this.u))||
-				 ((this.targetX<7)&&(this.targetY>0)&&(this.testTargetLine(1,-1)===unit*this.u))||
-				 ((this.targetX>0)&&(this.targetY<7)&&(this.testTargetLine(-1,1)===unit*this.u)));
+		return !(((this.targetX<7)&&(this.targetY<7)&&(this.testTargetLine(1,1)===unit*-this.u))||
+				 ((this.targetX>0)&&(this.targetY>0)&&(this.testTargetLine(-1,-1)===unit*-this.u))||
+				 ((this.targetX<7)&&(this.targetY>0)&&(this.testTargetLine(1,-1)===unit*-this.u))||
+				 ((this.targetX>0)&&(this.targetY<7)&&(this.testTargetLine(-1,1)===unit*-this.u)));
 	}
 	testTargetRook(){				
 		return this.testTargetLineUnit(4);		
@@ -89,29 +96,29 @@ class TestTarget extends MoveMatrix{
 
 
 	testTargetHorse(){			
-		return !(((this.targetX+2<8)&&(this.targetY+1<8)&&(this.matrix[this.targetX+2][this.targetY+1]===3*this.u))||
-			((this.targetX+2<8)&&(this.targetY-1>=0)&&(this.matrix[this.targetX+2][this.targetY-1]===3*this.u))||
-			((this.targetX+1<8)&&(this.targetY+2<8)&&(this.matrix[this.targetX+1][this.targetY+2]===3*this.u))||
-			((this.targetX+1<8)&&(this.targetY-2>=0)&&(this.matrix[this.targetX+1][this.targetY-2]===3*this.u))||
-			((this.targetX-2>=0)&&(this.targetY+1<8)&&(this.matrix[this.targetX-2][this.targetY+1]===3*this.u))||
-			((this.targetX-2>=0)&&(this.targetY-1>=0)&&(this.matrix[this.targetX-2][this.targetY-1]===3*this.u))||
-			((this.targetX-1>=0)&&(this.targetY+2<8)&&(this.matrix[this.targetX-1][this.targetY+2]===3*this.u))||
-			((this.targetX-1>=0)&&(this.targetY-2>=0)&&(this.matrix[this.targetX-1][this.targetY-2]===3*this.u)));
+		return !(((this.targetX+2<8)&&(this.targetY+1<8)&&(this.matrix[this.targetX+2][this.targetY+1]===3*-this.u))||
+			((this.targetX+2<8)&&(this.targetY-1>=0)&&(this.matrix[this.targetX+2][this.targetY-1]===3*-this.u))||
+			((this.targetX+1<8)&&(this.targetY+2<8)&&(this.matrix[this.targetX+1][this.targetY+2]===3*-this.u))||
+			((this.targetX+1<8)&&(this.targetY-2>=0)&&(this.matrix[this.targetX+1][this.targetY-2]===3*-this.u))||
+			((this.targetX-2>=0)&&(this.targetY+1<8)&&(this.matrix[this.targetX-2][this.targetY+1]===3*-this.u))||
+			((this.targetX-2>=0)&&(this.targetY-1>=0)&&(this.matrix[this.targetX-2][this.targetY-1]===3*-this.u))||
+			((this.targetX-1>=0)&&(this.targetY+2<8)&&(this.matrix[this.targetX-1][this.targetY+2]===3*-this.u))||
+			((this.targetX-1>=0)&&(this.targetY-2>=0)&&(this.matrix[this.targetX-1][this.targetY-2]===3*-this.u)));
 			
 	}
 	testTargetKing(){				
-		return !(((this.targetX<7)&&(this.targetY<7)&&(this.testTargetStep(1,1)===6*this.u))||
-			((this.targetX>0)&&(this.targetY>0)&&(this.testTargetStep(-1,-1)===6*this.u))||
-			((this.targetX<7)&&(this.targetY>0)&&(this.testTargetStep(1,-1)===6*this.u))||
-			((this.targetX>0)&&(this.targetY<7)&&(this.testTargetStep(-1,1)===6*this.u))||
-			((this.targetX<7)&&(this.testTargetStep(1,0)===6*this.u))||
-			((this.targetX>0)&&(this.testTargetStep(-1,0)===6*this.u))||
-			((this.targetY<7)&&(this.testTargetStep(0,1)===6*this.u))||
-			((this.targetY>0)&&(this.testTargetStep(0,-1)===6*this.u)));		
+		return !(((this.targetX<7)&&(this.targetY<7)&&(this.testTargetStep(1,1)===6*-this.u))||
+			((this.targetX>0)&&(this.targetY>0)&&(this.testTargetStep(-1,-1)===6*-this.u))||
+			((this.targetX<7)&&(this.targetY>0)&&(this.testTargetStep(1,-1)===6*-this.u))||
+			((this.targetX>0)&&(this.targetY<7)&&(this.testTargetStep(-1,1)===6*-this.u))||
+			((this.targetX<7)&&(this.testTargetStep(1,0)===6*-this.u))||
+			((this.targetX>0)&&(this.testTargetStep(-1,0)===6*-this.u))||
+			((this.targetY<7)&&(this.testTargetStep(0,1)===6*-this.u))||
+			((this.targetY>0)&&(this.testTargetStep(0,-1)===6*-this.u)));		
 	}
 	testTargetPawn(){			
-		return !(((this.targetX<7)&&(this.matrix[this.targetX+1][this.targetY+1] === 1*this.u))||		
-		   ((this.targetX>0)&&(this.matrix[this.targetX-1][this.targetY+1] === 1*this.u)));
+		return !(((this.targetX<7)&&(this.matrix[this.targetX+1][this.targetY+1] === 1*-this.u))||		
+		   ((this.targetX>0)&&(this.matrix[this.targetX-1][this.targetY+1] === 1*-this.u)));
 				
 	}
 }

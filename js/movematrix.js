@@ -6,24 +6,29 @@ class MoveMatrix extends Matrix{
 		this.x=-1;
 		this.y=-1;
 		this.userID=0;
-		//this.testTarget = new TestTarget();
-
+		this.figure=0;
+		this.u;
 	}
 	setMove(oldX,oldY,x,y){
-		this.oldX=oldX;
-		this.oldY=oldY;
-		this.x=x;
-		this.y=y;
+		this.oldX = oldX;
+		this.oldY = oldY;
+		this.x = x;
+		this.y = y;
 	}
 	setUserID(userID){
+		this.u=this.getSign(this.userID);
 		this.userID=userID;
 	}
-	go(x,y){
-		let v= Number(this.getValue(this.oldX,this.oldY));	
-		switch (Math.abs(v)){
+	setFigure(figure){
+		this.figure=figure;
+	}
+	go(x,y){	
+		this.x = x;
+		this.y = y;		
+		switch (Math.abs(this.figure)){
 			case 1:{	
 				if(this.testMovePawn()){
-					this.setValue(x,y,v);
+					this.setValue(x,y,this.figure);
 					this.setValue(this.oldX,this.oldY,0);					
 					return true;
 				}
@@ -31,7 +36,7 @@ class MoveMatrix extends Matrix{
 			}
 			case 2:{
 				if(this.testMoveElephant()){
-					this.setValue(x,y,v);
+					this.setValue(x,y,this.figure);
 					this.setValue(this.oldX,this.oldY,0);
 					return true;
 				}
@@ -40,7 +45,7 @@ class MoveMatrix extends Matrix{
 			}
 			case 3:{
 				if(this.testMoveHorse()){
-					this.setValue(x,y,v);
+					this.setValue(x,y,this.figure);
 					this.setValue(this.oldX,this.oldY,0);
 					return true;
 				}
@@ -48,7 +53,7 @@ class MoveMatrix extends Matrix{
 			}
 			case 4:{
 				if(this.testMoveRook()){
-					this.setValue(x,y,v);
+					this.setValue(x,y,this.figure);
 					this.setValue(this.oldX,this.oldY,0);
 					return true;
 				}
@@ -56,15 +61,15 @@ class MoveMatrix extends Matrix{
 			}
 			case 5:{
 				if(this.testMoveQueen()){
-					this.setValue(x,y,v);
+					this.setValue(x,y,this.figure);
 					this.setValue(this.oldX,this.oldY,0);
 					return true;
 				}
 			return false;
 			}
-			case 6:{
+			case 6:{				
 				if(this.testMoveKing()){
-					this.setValue(x,y,v);
+					this.setValue(x,y,this.figure);
 					this.setValue(this.oldX,this.oldY,0);
 					return true;
 				}
@@ -72,6 +77,10 @@ class MoveMatrix extends Matrix{
 			}
 			default: return false;
 		}		
+	}
+	back(){
+		this.setValue(this.oldX,this.oldY,this.figure);
+		this.setValue(this.x,this.y,0);
 	}
 
 
@@ -105,15 +114,17 @@ class MoveMatrix extends Matrix{
 		}
 		return false;
 	}
-	testMoveKing(){
+	testMoveKing(){		
 		if((Math.abs(this.oldX-this.x)<=1)&&(Math.abs(this.oldY-this.y)<=1)){
 			return true;
 		}
 		return false;
 	}
 	testMovePawn(){
-		const u = this.userID/Math.abs(this.userID);
-		const value = this.getValue(this.x,this.y);		
+		const u = this.userID/Math.abs(this.userID);		
+		const value = this.getValue(this.x,this.y);			
+		
+		
 		const v = value/Math.abs(value);
 		if(Math.abs(this.oldX===this.x)&&(value===0)){
 			if((this.oldY-this.y)===1){

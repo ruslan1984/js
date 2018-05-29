@@ -12,8 +12,13 @@ class Matrix{
 	setValue(x,y,value){
 		this.matrix[x][y] = value;
 	}	
-	getValue(x,y){		
-		return this.matrix[x][y];
+	getValue(x,y){	
+		if (x<0||y<0||x>7||y>7){
+			throw new SyntaxError("Данные некорректны");
+		}
+		return this.matrix[x][y];	
+			
+		
 	}	
 	getReverseMatrix(){
 		let matrix=this.matrix.slice();

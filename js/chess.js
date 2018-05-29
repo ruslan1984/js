@@ -43,9 +43,10 @@
 			img.onload = async function() {				
 				const client = new Client('http://localhost:8080/');
 				const mtr = JSON.parse(await client.getMatrix());			
-				matrix.setMatrix(mtr);
+				matrix.setDrawMatrix(mtr);
 				if(matrix.userID<0){
-					matrix.reverseMatrix();			
+					matrix.reverseMatrix();
+					console.log('1');
 				}		
 			
 				await matrix.drawMatrix.draw();
@@ -63,8 +64,6 @@
 				main.appendChild(begin);
 				matrix.endGame();
 			});
-
-
 			cv.addEventListener('click',(e)=>{	
 				let x = Math.floor(e.offsetX/cubWidth);
 				let y = Math.floor(e.offsetY/cubWidth);
