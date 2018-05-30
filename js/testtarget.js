@@ -4,8 +4,7 @@ class TestTarget extends MoveMatrix{
 	}
 
 	targetGo(x,y){		
-		if(this.go(x,y)){
-			console.log(this.testTarget());
+		if(this.go(x,y)){			
 			if(this.testTarget()){
 				return true;
 			}else{

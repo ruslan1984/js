@@ -11,7 +11,7 @@ class DrawMatrix extends Matrix{
 		this.figures = new Figures(ctx,cubWidth,img);
 	}
 	
-	drawBoard(){
+	drawBoard(userID){
 		for(let i=0;i<8;i++){	
 			for(let j=0;j<8;j++){				
 				this.ctx.fillStyle=((i+j)%2)?"#eeeeee":"#888888";
@@ -20,7 +20,8 @@ class DrawMatrix extends Matrix{
 			this.ctx.fillStyle="#000";
 			this.ctx.font="bold "+this.cubWidth/4+"px Arial";
 			this.ctx.fillText(String.fromCharCode(65+i), this.cubWidth*i+this.cubWidth*0.43, this.cubWidth*8+this.cubWidth*0.3);
-			this.ctx.fillText(Math.abs(i-8), this.cubWidth*8+5, this.cubWidth*i+this.cubWidth*0.6);
+			const num = (userID>0)?8-i:i+1;
+			this.ctx.fillText(num, this.cubWidth*8+5, this.cubWidth*i+this.cubWidth*0.6);
 		}
 	}
 	drawMatrix(){
@@ -32,15 +33,15 @@ class DrawMatrix extends Matrix{
 			});
 		});
 	}
-	drawChecked(x,y){
-		this.draw();
+	drawChecked(x,y,userID){
+		this.draw(userID);
 		this.ctx.strokeStyle="#0c0";
 		this.ctx.lineWidth=3;
 		this.ctx.lineJoin = "round";
 		this.ctx.strokeRect(x*this.cubWidth+1, y*this.cubWidth+1, this.cubWidth-2, this.cubWidth-2);	
 	}
-	draw(){
-		this.drawBoard();		
+	draw(userID){
+		this.drawBoard(userID);		
 		this.drawMatrix();					
 	}
 }

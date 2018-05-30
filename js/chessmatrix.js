@@ -1,10 +1,11 @@
 class ChessMatrix extends TestTarget{
-	constructor(ctx,cubWidth,img){	
+	constructor(ctx,cubWidth,img,end){	
 		super();		
 		this.newGame();
 		this.drawMatrix = new DrawMatrix(ctx,cubWidth,img);		
 		this.host='http://localhost:8080/';
-		this.client = new Client(this.host);		
+		this.client = new Client(this.host);
+		this.end=end;		
 		
 	}
 	newGame(){
@@ -14,8 +15,7 @@ class ChessMatrix extends TestTarget{
 		this.timer; 
 		this.clicked=false;
 		this.move=1;		
-		this.setUserID(1);
-		//console.log(this.userID);
+		this.setUserID(1);		
 		this.clicked=false;	
 		this.finish=0;
 	}
@@ -41,7 +41,8 @@ class ChessMatrix extends TestTarget{
 		this.finish = Number(await this.client.getFinish());		
 		if(this.finish!==0){
 			alert('Оппонент завершил игру');
-			this.endGame();					
+			this.endGame();	
+			this.end();				
 			return;
 		}
 			const v = Number(this.getValue(x,y));
@@ -55,15 +56,14 @@ class ChessMatrix extends TestTarget{
 					if(this.targetGo(x,y)){				
 						 this.move=-this.userID;
 						
-						 this.drawMatrix.draw();	
+						 this.drawMatrix.draw(this.userID);	
 						 if(this.userID<0){
-						 	this.reverseMatrix();					
+						 	this.reverseMatrix(this.userID);					
 						 }				
 						 this.client.setMatrix(this.getMatrix());
 						 this.client.setMove(this.move);
 						 this.clicked=false;
-						 this.startTimer();
-						//console.log(this.testTarget());
+						 this.startTimer();						
 					}
 				}					
 			}
@@ -73,7 +73,7 @@ class ChessMatrix extends TestTarget{
 				this.oldY = y;				
 				this.clicked=true;
 				this.setFigure(v);
-				this.drawMatrix.drawChecked(x,y);
+				this.drawMatrix.drawChecked(x,y,this.userID);
 
 			}		
 	}
@@ -104,11 +104,12 @@ class ChessMatrix extends TestTarget{
 				if(this.userID<0){
 					this.reverseMatrix();					
 				}
-				this.drawMatrix.draw();		
+				this.drawMatrix.draw(this.userID);		
 		 	}		 	
 		 	if(this.finish!==0){
 		 		alert('Оппонент завершил игру');
-		 		this.endGame();		 	
+		 		this.endGame();	
+		 		this.end()	 	;
 		 		clearInterval(this.timer);		 		
 		 	}
 		},
@@ -118,7 +119,7 @@ class ChessMatrix extends TestTarget{
 
 	endGame(){		
 		localStorage.removeItem('chessUserID');
-		if(this.finish === 0){		
+		if(this.finish === 0){
 			this.client.setFinish(this.userID);		
 		}else {
 			this.client.setFinish(0);				
